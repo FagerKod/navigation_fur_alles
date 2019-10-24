@@ -32,3 +32,11 @@ button {
     border: 2px solid red;
   }
 }
+
+.focused-element {
+  border: 2px solid salmon;
+}
+
+*:focus {
+  border: 2px solid lightcoral;
+}

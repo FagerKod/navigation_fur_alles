@@ -8,11 +8,11 @@ function App() {
   return (
     <div className="App">
       <FocusContainerVertical>
-        <TopNav />
+        <TopNav pos={1} />
         <FocusContainerVertical>
-          <Stripe name="Jürgens stripe" />
-          <Stripe name="Jonnys stripe" />
-          <Stripe name="Jerrys stripe" />
+          <Stripe pos={2} name="Jürgens stripe" />
+          <Stripe pos={3} name="Jonnys stripe" />
+          <Stripe pos={4} name="Jerrys stripe" />
         </FocusContainerVertical>
       </FocusContainerVertical>
     </div>

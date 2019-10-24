@@ -1,29 +1,47 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import FocusContainerHorizontal from './FocusContainerHorizontal';
 import FocusedElement from './FocusedElement';
+import { NavContext } from './navContext';
 
-const TopNav = () => {
+const TopNav = ({ pos }) => {
+  const { activeStripe } = useContext(NavContext);
+  const [selectedStripe, setSelectedStripe] = useState(false);
+  const items = [
+    {
+      id: 1,
+      name: 'Hem',
+    },
+    {
+      id: 2,
+      name: 'Någon annanstans',
+    },
+    {
+      id: 3,
+      name: 'Nangiala',
+    },
+  ];
+
+  useEffect(() => {
+    setSelectedStripe(pos === activeStripe);
+  }, [pos, activeStripe]);
+
   return (
     <nav className="topnav">
-      <FocusContainerHorizontal name="topnav">
+      <FocusContainerHorizontal
+        pos={pos}
+        isActive={pos === activeStripe}
+        name="topnav">
         <ul>
-          <li>
-            <FocusedElement>
-              <a href="www.google.se">Länk 1</a>
-            </FocusedElement>
-          </li>
-
-          <li>
-            <FocusedElement>
-              <a href="www.google.se">Länk 2</a>
-            </FocusedElement>
-          </li>
-
-          <li>
-            <FocusedElement>
-              <a href="www.google.se">Länk 3</a>
-            </FocusedElement>
-          </li>
+          {items.map(({ id, name }, index) => (
+            <li key={id}>
+              <FocusedElement
+                type="link"
+                isInSelectedStripe={selectedStripe}
+                index={index}
+                name={name}
+              />
+            </li>
+          ))}
         </ul>
       </FocusContainerHorizontal>
     </nav>

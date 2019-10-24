@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import FocusContainerHorizontal from './FocusContainerHorizontal';
 import FocusedElement from './FocusedElement';
+import { NavContext } from './navContext';
 
-const Stripe = ({ name }) => {
+const Stripe = ({ name, pos }) => {
+  const { activeStripe } = useContext(NavContext);
+  const [selectedStripe, setSelectedStripe] = useState(false);
   const items = [
     {
       id: 1,
@@ -23,20 +26,24 @@ const Stripe = ({ name }) => {
       price: 35,
     },
   ];
+
+  useEffect(() => {
+    setSelectedStripe(pos === activeStripe);
+  }, [pos, activeStripe]);
   return (
     <>
       <h2>{name}</h2>
-      <FocusContainerHorizontal>
+      <FocusContainerHorizontal pos={pos} isActive={selectedStripe}>
         <ul>
-          {items.map(({ id, name, imageUrl, price }) => (
+          {items.map(({ id, name, imageUrl, price }, index) => (
             <li key={id}>
-              <FocusedElement>
-                <button type="button">
-                  <img src={imageUrl} alt="en bild" width="70" height="70" />
-                  <span>{name}</span>
-                  <span>{price}</span>
-                </button>
-              </FocusedElement>
+              <FocusedElement
+                type={'button'}
+                isInSelectedStripe={selectedStripe}
+                index={index}
+                name={name}
+                imageUrl={imageUrl}
+                price={price}></FocusedElement>
             </li>
           ))}
         </ul>
